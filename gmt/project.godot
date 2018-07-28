@@ -13,7 +13,7 @@ _global_script_classes=[  ]
 [application]
 
 config/name="Marshall Tester"
-run/main_scene="res://scene/3.x/tester.tscn"
+run/main_scene="res://scene/3.x/main.tscn"
 config/icon="res://icon.png"
 
 [autoload]

@@ -1,5 +1,14 @@
 extends Node
 
+func load_tester():
+	get_tree().change_scene("res://scene/3.x/tester.tscn")
+
+func load_listener():
+	get_tree().change_scene("res://scene/3.x/listener.tscn")
+
+func load_sender():
+	get_tree().change_scene("res://scene/3.x/sender.tscn")
+
 func set_dest_address(udp, ip, port):
 	udp.set_dest_address(ip, port)
 
