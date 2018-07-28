@@ -1,8 +1,8 @@
 extends Node
 
 var udp = PacketPeerUDP.new()
-var MAX_SIZE = 40
-var PERMUTATIONS = 10
+var MAX_SIZE = 20
+var PERMUTATIONS = 20
 
 var _type = -1
 var _size = 0
@@ -16,8 +16,9 @@ var _shuold_quit = false
 func _ready():
 	print("Seed: %d" % _seed)
 	seed(_seed)
+	COMPAT.set_dest_address(udp, "127.0.0.1", 1025)
 	_thread.start(self, "_thread_func")
-	
+	COMPAT.enable_proc(self, true)
 	pass # Replace with function body.
 
 func _process(delta):
@@ -27,7 +28,6 @@ func _process(delta):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _thread_func(userdata=null):
-	udp.set_dest_address("127.0.0.1", 1025)
 	while not _shuold_quit:
 		OS.delay_msec(5)
 		_send()

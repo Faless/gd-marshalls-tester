@@ -1,11 +1,11 @@
 extends Reference
 
-var _data = PoolByteArray()
+var _data = COMPAT.ByteArr()
 var _variations = []
 var _seed = OS.get_unix_time()
 
 func set_data(data, p_seed=null):
-	self._data = PoolByteArray(Array(data))
+	self._data = COMPAT.ByteArr(Array(data))
 	if p_seed != null:
 		_seed = p_seed
 	else:
@@ -21,7 +21,7 @@ func get_variations():
 	return _variations
 
 func make_variation():
-	var p = PoolByteArray()
+	var p = COMPAT.ByteArr()
 	p.append_array(_data)
 	return p
 

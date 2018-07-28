@@ -16,6 +16,10 @@ config/name="Marshall Tester"
 run/main_scene="res://scene/3.x/tester.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+COMPAT="*res://script/3.x-compat.gd"
+
 [input]
 
 ui_accept={

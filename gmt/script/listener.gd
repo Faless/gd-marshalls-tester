@@ -13,7 +13,7 @@ func my_process():
 	var x = bytes2var(pkt)
 	if _mutex != null:
 		_mutex.lock()
-		_valids.append(pkt)
+		_valids.append([pkt, x])
 		_mutex.unlock()
 	else:
 		_valids.append(pkt)
@@ -28,7 +28,8 @@ func _process(delta):
 	if _mutex != null:
 		_mutex.lock()
 	for v in _valids:
-		node.set_text(text + "Valid: %s %s\n" % [str(v), str(bytes2var(v))])
+		prints("Valid:", v[0], v[1])
+		node.set_text(text + "Valid: %s %s\n" % v)
 	if _mutex != null:
 		_valids.clear()
 	_mutex.unlock()
@@ -43,3 +44,4 @@ func _ready():
 	udp.listen(1025)
 	_thread.start(self, "_thread_func")
 	print("Ready")
+	COMPAT.enable_proc(self, true)

@@ -10,7 +10,7 @@ var _idx = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	ProjectSettings.set_setting("physics/common/physics_fps", 480*2)
+	COMPAT.set_physics_fps(480*2)
 
 	var args = Array(OS.get_cmdline_args())
 	var c_seed = OS.get_unix_time()
@@ -36,6 +36,7 @@ func _ready():
 	print("Good: %d" % good.size())
 	_failed = false
 
+	COMPAT.enable_phys(self, true)
 	if c_idx != null:
 		var p = null
 		while _idx <= c_idx:
@@ -43,24 +44,31 @@ func _ready():
 			_idx += 1
 		print(p)
 		get_tree().quit()
-		set_physics_process(false)
+		COMPAT.enable_phys(self, false)
 		if p != null:
 			print(Array(p["original"]))
 			print(Array(p["variation"]))
 			var x = bytes2var(p["variation"])
 
 func _physics_process(delta):
+	_my_process(delta)
+
+func _fixed_process(delta):
+	_my_process(delta)
+
+func _my_process(delta):
 	if _failed:
 		print("Failed")
 		get_tree().quit()
 		return
-	var p = _tests.pop_back()
-	if p == null:
+	if _tests.size() == 0:
 		print("All good")
 		get_tree().quit()
 		return
+	var p = _tests[_tests.size()-1]
+	_tests.pop_back()
 
-	printt(_idx, p["seed"], p["notes"])
+	printt("Testing:", _idx, p["seed"], p["notes"])
 	var variation = p["variation"]
 	_idx += 1
 
